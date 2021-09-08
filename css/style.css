@@ -1,79 +1,99 @@
-html,
-body {
-  margin: 0 au;
+* {
+  margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  overflow: hidden;
-  background-color: black;
-  border: solid;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-#izquierda {
-  position: relative;
+.tablero {
+  height: 90vh;
+  width: 89vw;
+  border-radius: 14px;
+  border: solid black;
+  opacity: 0.6;
+  background-color: green;
+}
+
+.tablero img {
+  border-radius: 14px;
+  height: 84vh;
+  width: 80vw;
+}
+
+.pelota {
+  height: 30px;
   width: 30px;
-  height: 200px;
-  background-color: white;
-  float: left;
-  border-radius: 10px;
-}
-
-#derecha {
-  position: relative;
-  width: 30px;
-  height: 200px;
-  background-color: white;
-  float: right;
-  border-radius: 10px;
-}
-
-#pelota {
-  position: absolute;
-  width: 20px;
-  height: 20px;
-  background-color: white;
   border-radius: 50%;
+  position: fixed;
+  top: calc(50% - 15px);
+  left: calc(50% - 15px);
 }
 
-#limite,
-#puntuacionIzquierda,
-#puntuacionDerecha {
-  z-index: 10;
+.ball_effect {
+  height: 100%;
+  width: 100%;
+  border-radius: 100px;
+  animation: spinBall 0.1s linear infinite;
+  background-color: #fff;
 }
 
-#puntuacionIzquierda,
-#puntuacionDerecha {
-  text-align: center;
-  position: relative;
-  width: 40px;
-  height: 40px;
-  font-size: 30px;
-  padding: 8px;
-  border-radius: 50%;
+@keyframes spinBall {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
 
-#limite{
-    display: flex;
-    justify-content: space-evenly;
-    color: #fff;
+.raqueta {
+  height: 130px;
+  width: 18px;
+  border-radius: 10%;
+  position: fixed;
 }
 
-#puntuacionDerecha {
-  background-color: blue;
-  color: #fff;
-  padding: 8px;
-  float: right;
-}
-#puntuacionIzquierda {
-  background-color: purple;
-  color: #fff;
-  padding: 8px;
-  float: left;
+.raquetaUno {
+  top: calc(7.5vh + 55px);
+  left: calc(5vw + 20px);
+  background-color: #fff;
 }
 
-#goal {
-  font-size: 1000%;
-  transition: 1.5s all;
-  display: inline-block;
+.raquetaDos {
+  top: calc(80vh + 7.5vh - 100px - 55px);
+  right: calc(5vw + 20px);
+  background-color: #fff;
+}
+
+.puntuacionJugadorUno {
+  height: 50px;
+  width: 50px;
+  color: #000;
+  position: fixed;
+  left: 30vw;
+  margin-top: 30px;
+}
+
+.puntuacionJugadorDos {
+  height: 50px;
+  width: 50px;
+  color: #000;
+  position: fixed;
+  left: 70vw;
+  margin-top: 30px;
+}
+
+.mensaje {
+  position: fixed;
+  /* color: #48426d; */
+  height: 10vh;
+  width: 30vw;
+  color: #c9cbff;
+  left: 38vw;
+  margin: 30px auto auto auto;
 }

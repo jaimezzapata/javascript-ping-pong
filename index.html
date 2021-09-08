@@ -1,21 +1,30 @@
 <!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Ping Pong</title>
-    <link href="css/style.css" rel="stylesheet" type="text/css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content=
+		"width=device-width, initial-scale=1.0">
+	<title>PONG GAME</title>
+	<link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" href="raqueta.png" type="image/x-icon">
 </head>
 
 <body>
-    <div id="izquierda"></div>
-    <div id="pelota"> </div>
-    <div id="derecha"></div>
-    <div class="tablero">
-        <div id="puntuacionIzquierda"> 0 </div>
-        <div id="puntuacionDerecha"> 0 </div>
-        <br>
-        <span id="punto"></span>
-    </div>
-    <script src="js/app.js"></script>
+	<div class="tablero">
+        <div class='pelota'>
+            <div class="ball_effect"></div>
+		</div>
+		<div class="raquetaUno raqueta"></div>
+		<div class="raquetaDos raqueta"></div>
+		<h1 class="puntuacionJugadorUno">0</h1>
+		<h1 class="puntuacionJugadorDos">0</h1>
+		<h1 class="mensaje">
+            Presione ENTER para jugar
+		</h1>
+	</div>
+	
+	<script src="js/app.js"></script>
 </body>
 
 </html>

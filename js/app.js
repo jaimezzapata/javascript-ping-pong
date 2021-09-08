@@ -1,124 +1,128 @@
-//ps= player speed
-var ps = 15;
+let estadoJuego = "start";
+let raquetaUno = document.querySelector(".raquetaUno");
+let raquetaDos = document.querySelector(".raquetaDos");
+let tablero = document.querySelector(".tablero");
+let pelota_inicial = document.querySelector(".pelota");
+let pelota = document.querySelector(".pelota");
+let puntuacionUno = document.querySelector(".puntuacionJugadorUno");
+let puntuacionDos = document.querySelector(".puntuacionJugadorDos");
+let mensaje = document.querySelector(".mensaje");
+let raquetaUno_coor = raquetaUno.getBoundingClientRect();
+let raquetaDos_coor = raquetaDos.getBoundingClientRect();
+let pelota_inicial_coord = pelota.getBoundingClientRect();
+let pelota_coord = pelota_inicial_coord;
+let tablero_coord = tablero.getBoundingClientRect();
+let paddle_common = document.querySelector(".raqueta").getBoundingClientRect();
 
-function nfp(urpx) {
-  return Number(urpx.replace("px", ""));
-}
+let dx = Math.floor(Math.random() * 4) + 3;
+let dy = Math.floor(Math.random() * 4) + 3;
+let dxd = Math.floor(Math.random() * 2);
+let dyd = Math.floor(Math.random() * 2);
 
-var juadorDerecha = document.getElementById("derecha");
-var izquierda = document.getElementById("izquierda");
-var pelota = document.getElementById("pelota");
-
-var puntuacionDerecha = document.getElementById("puntuacionDerecha");
-var puntuacionIzquierda = document.getElementById("puntuacionIzquierda");
-var ogoal = document.getElementById("punto");
-
-var ancho = window.innerWidth;
-var alto = window.innerHeight;
-
-var map = [];
-onkeydown = onkeyup = function (e) {
-  map[e.keyCode] = e.type == "keydown";
-};
-
-
-/* Se crea el comportamiento del movimiento de los jugadores */
-function keydown() {
-  if (map[40]) {
-    if (nfp(juadorDerecha.style.top) + ps > alto - 200) {
-      juadorDerecha.style.top = alto - 200 + "px";
-    } else {
-      juadorDerecha.style.top = nfp(juadorDerecha.style.top) + ps + "px";
+/* Iniciar el juego al presionar Enter */
+document.addEventListener("keydown", (e) => {
+  if (e.key == "Enter") {
+    estadoJuego = estadoJuego == "start" ? "play" : "start";
+    if (estadoJuego == "play") {
+      mensaje.innerHTML = "Juego Iniciado";
+      mensaje.style.left = 42 + "vw";
+      requestAnimationFrame(() => {
+        dx = Math.floor(Math.random() * 4) + 3;
+        dy = Math.floor(Math.random() * 4) + 3;
+        dxd = Math.floor(Math.random() * 2);
+        dyd = Math.floor(Math.random() * 2);
+        moveBall(dx, dy, dxd, dyd);
+      });
     }
   }
 
-  else if (map[38]) {
-    if (nfp(juadorDerecha.style.top) - ps < 0) {
-      juadorDerecha.style.top = 0 + "px";
-    } else {
-      juadorDerecha.style.top = nfp(juadorDerecha.style.top) - ps + "px";
+  /* Configuración de las teclas de movimientos*/
+  if (estadoJuego == "play") {
+    /* Configuración flechas de dirección */
+    if (e.key == "ArrowUp") {
+      raquetaDos.style.top =
+        Math.max(
+          tablero_coord.top,
+          raquetaDos_coor.top - window.innerHeight * 0.1
+        ) + "px";
+      raquetaDos_coor = raquetaDos.getBoundingClientRect();
+    }
+    if (e.key == "ArrowDown") {
+      raquetaDos.style.top =
+        Math.min(
+          tablero_coord.bottom - paddle_common.height,
+          raquetaDos_coor.top + window.innerHeight * 0.1
+        ) + "px";
+      raquetaDos_coor = raquetaDos.getBoundingClientRect();
+    }
+
+    /* Configuración teclas S y W */
+    if (e.key == "w") {
+      raquetaUno.style.top =
+        Math.max(
+          tablero_coord.top,
+          raquetaUno_coor.top - window.innerHeight * 0.06
+        ) + "px";
+      raquetaUno_coor = raquetaUno.getBoundingClientRect();
+    }
+    if (e.key == "s") {
+      raquetaUno.style.top =
+        Math.min(
+          tablero_coord.bottom - paddle_common.height,
+          raquetaUno_coor.top + window.innerHeight * 0.06
+        ) + "px";
+      raquetaUno_coor = raquetaUno.getBoundingClientRect();
     }
   }
+});
 
-  if (map[83]) {
-    if (nfp(izquierda.style.top) + ps > alto - 200) {
-      izquierda.style.top = alto - 200 + "px";
+/*Funciones que le da movimiento a la pelota de Ping Pong  */
+function moveBall(dx, dy, dxd, dyd) {
+  if (pelota_coord.top <= tablero_coord.top) {
+    dyd = 1;
+  }
+  if (pelota_coord.bottom >= tablero_coord.bottom) {
+    dyd = 0;
+  }
+  if (
+    pelota_coord.left <= raquetaUno_coor.right &&
+    pelota_coord.top >= raquetaUno_coor.top &&
+    pelota_coord.bottom <= raquetaUno_coor.bottom
+  ) {
+    dxd = 1;
+    dx = Math.floor(Math.random() * 4) + 3;
+    dy = Math.floor(Math.random() * 4) + 3;
+  }
+  if (
+    pelota_coord.right >= raquetaDos_coor.left &&
+    pelota_coord.top >= raquetaDos_coor.top &&
+    pelota_coord.bottom <= raquetaDos_coor.bottom
+  ) {
+    dxd = 0;
+    dx = Math.floor(Math.random() * 4) + 3;
+    dy = Math.floor(Math.random() * 4) + 3;
+  }
+  if (
+    pelota_coord.left <= tablero_coord.left ||
+    pelota_coord.right >= tablero_coord.right
+  ) {
+    if (pelota_coord.left <= tablero_coord.left) {
+      puntuacionDos.innerHTML = +puntuacionDos.innerHTML + 1;
     } else {
-      izquierda.style.top = nfp(izquierda.style.top) + ps + "px";
+      puntuacionUno.innerHTML = +puntuacionUno.innerHTML + 1;
     }
-  } else if (map[87]) {
-    if (nfp(izquierda.style.top) - ps < 0) {
-      izquierda.style.top = 0 + "px";
-    } else {
-      izquierda.style.top = nfp(izquierda.style.top) - ps + "px";
-    }
+    estadoJuego = "start";
+
+    pelota_coord = pelota_inicial_coord;
+    pelota.style = pelota_inicial.style;
+    mensaje.innerHTML = "Presone ENTER para jugar";
+    mensaje.style.left = 38 + "vw";
+    return;
   }
-}
-
-var speedx = 3,
-  speedy = 1;
-var balltime = 1;
-pelota.style.left = ancho / 2 + "px";
-
-
-/* Se crea la pelota de ping pong */
-function ball() {
-  pelota.style.left = nfp(pelota.style.left) + speedx + "px";
-  pelota.style.top = nfp(pelota.style.top) + speedy + "px";
-}
-
-
-/* Se crea el movimiento de la pelota */
-function moveball() {
-  ball();
-
-  if (alto < nfp(pelota.style.top) + 20 || nfp(pelota.style.top) < 0) {
-    speedy *= -1;
-  }
-
-  if (nfp(pelota.style.left) >= ancho - 50) {
-    if (
-      nfp(juadorDerecha.style.top) <= nfp(pelota.style.top) + 20 &&
-      nfp(juadorDerecha.style.top) + 200 >= nfp(pelota.style.top)
-    ) {
-      speedx *= -1;
-    } else if (nfp(pelota.style.left) >= ancho - 20) goal("izquierda");
-  }
-
-  if (nfp(pelota.style.left) <= 30) {
-    if (
-      nfp(izquierda.style.top) <= nfp(pelota.style.top) + 20 &&
-      nfp(izquierda.style.top) + 200 >= nfp(pelota.style.top)
-    ) {
-      speedx *= -1;
-    } else if (nfp(pelota.style.left) <= 0) goal("derecha");
-  }
-
-  setTimeout(function () {
-    moveball();
-  }, balltime);
-}
-
-setInterval(function () {
-  keydown();
-}, 10);
-moveball();
-
-
-/* Se crea el marcador de puntos y se acumula a su respectivo jugador */
-function goal(pos) {
-  ogoal.style.color = "white";
-
-  setTimeout(function () {
-    ogoal.style.color = "black";
-  }, 10);
-
-  if (pos == "izquierda") {
-    puntuacionDerecha.innerHTML = Number(puntuacionDerecha.innerHTML) + 1;
-  } else {
-    puntuacionIzquierda.innerHTML = Number(puntuacionIzquierda.innerHTML) + 1;
-  }
-
-  speedx *= -1;
-  pelota.style.left = ancho / 2 + "px";
+  pelota.style.top = pelota_coord.top + dy * (dyd == 0 ? -1 : 1) + "px";
+  pelota.style.left = pelota_coord.left + dx * (dxd == 0 ? -1 : 1) + "px";
+  pelota_coord = pelota.getBoundingClientRect();
+  requestAnimationFrame(() => {
+    moveBall(dx, dy, dxd, dyd);
+  });
 }
