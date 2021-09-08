@@ -39,22 +39,37 @@ body {
 #limite,
 #puntuacionIzquierda,
 #puntuacionDerecha {
-  font-size: 500%;
-  color: white;
   z-index: 10;
 }
 
+#puntuacionIzquierda,
 #puntuacionDerecha {
+  text-align: center;
   position: relative;
-  top: 0;
+  width: 40px;
+  height: 40px;
+  font-size: 30px;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+#limite{
+    display: flex;
+    justify-content: space-evenly;
+    color: #fff;
+}
+
+#puntuacionDerecha {
+  background-color: blue;
+  color: #fff;
+  padding: 8px;
   float: right;
-  font-size: 30px !important;
 }
 #puntuacionIzquierda {
-  position: relative;
-  top: 0;
+  background-color: purple;
+  color: #fff;
+  padding: 8px;
   float: left;
-  font-size: 30px !important;
 }
 
 #goal {
