@@ -31,7 +31,7 @@ document.addEventListener("keydown", (e) => {
         dy = Math.floor(Math.random() * 4) + 3;
         dxd = Math.floor(Math.random() * 2);
         dyd = Math.floor(Math.random() * 2);
-        moveBall(dx, dy, dxd, dyd);
+        moveBall();
       });
     }
   }
@@ -77,7 +77,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 /*Funciones que le da movimiento a la pelota de Ping Pong  */
-function moveBall(dx, dy, dxd, dyd) {
+function moveBall() {
   if (pelota_coord.top <= tablero_coord.top) {
     dyd = 1;
   }
@@ -123,6 +123,6 @@ function moveBall(dx, dy, dxd, dyd) {
   pelota.style.left = pelota_coord.left + dx * (dxd == 0 ? -1 : 1) + "px";
   pelota_coord = pelota.getBoundingClientRect();
   requestAnimationFrame(() => {
-    moveBall(dx, dy, dxd, dyd);
+    moveBall();
   });
 }
