@@ -54,35 +54,53 @@ function ball() {
 }
 
 function moveball() {
-    ball();
+  ball();
 
-    //remove overflow y
-    if (h < nfp(b.style.top) + 20 || nfp(b.style.top) < 0) {
-        speedy *= -1;
-    }
+  //remove overflow y
+  if (h < nfp(b.style.top) + 20 || nfp(b.style.top) < 0) {
+    speedy *= -1;
+  }
 
-    //overflow-x right
-    if (nfp(b.style.left) >= w - 50) {
-        if (nfp(r.style.top) <= nfp(b.style.top) + 20 && nfp(r.style.top) + 200 >= nfp(b.style.top)) {
-            speedx *= -1;
-        } else if (nfp(b.style.left) >= w - 20)
-            goal('left');
-    }
+  //overflow-x right
+  if (nfp(b.style.left) >= w - 50) {
+    if (
+      nfp(r.style.top) <= nfp(b.style.top) + 20 &&
+      nfp(r.style.top) + 200 >= nfp(b.style.top)
+    ) {
+      speedx *= -1;
+    } else if (nfp(b.style.left) >= w - 20) goal("left");
+  }
 
+  //remove overflow x in left ir get the goal in left
+  if (nfp(b.style.left) <= 30) {
+    if (
+      nfp(l.style.top) <= nfp(b.style.top) + 20 &&
+      nfp(l.style.top) + 200 >= nfp(b.style.top)
+    ) {
+      speedx *= -1;
+    } else if (nfp(b.style.left) <= 0) goal("right");
+  }
 
+  setTimeout(function () {
+    moveball();
+  }, balltime);
+}
 
+setInterval(function () {
+  keydown();
+}, 10);
+moveball();
 
-    //remove overflow x in left ir get the goal in left
-    if (nfp(b.style.left) <= 30) {
-        if (nfp(l.style.top) <= nfp(b.style.top) + 20 && nfp(l.style.top) + 200 >= nfp(b.style.top)) {
-            speedx *= -1;
-        } else if (nfp(b.style.left) <= 0)
-            goal('right');
-    }
+function goal(pos) {
+  ogoal.style.color = "white";
 
+  setTimeout(function () {
+    ogoal.style.color = "black";
+  }, 1000);
 
+  if (pos == "left") rscore.innerHTML = Number(rscore.innerHTML) + 1;
+  else lscore.innerHTML = Number(lscore.innerHTML) + 1;
 
-    setTimeout(function() {
-        moveball()
-    }, balltime);
+  speedx *= -1;
+  b.style.left = w / 2 + "px";
 }
