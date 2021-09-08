@@ -5,13 +5,13 @@ function nfp(urpx) {
   return Number(urpx.replace("px", ""));
 }
 
-var juadorDerecha = document.getElementById("right");
-var izquierda = document.getElementById("left");
-var pelota = document.getElementById("ball");
+var juadorDerecha = document.getElementById("derecha");
+var izquierda = document.getElementById("izquierda");
+var pelota = document.getElementById("pelota");
 
-var puntuacionDerecha = document.getElementById("scoreleft");
-var puntuacionIzquierda = document.getElementById("scoreright");
-var ogoal = document.getElementById("goal");
+var puntuacionDerecha = document.getElementById("puntuacionDerecha");
+var puntuacionIzquierda = document.getElementById("puntuacionIzquierda");
+var ogoal = document.getElementById("punto");
 
 var ancho = window.innerWidth;
 var alto = window.innerHeight;
@@ -76,7 +76,7 @@ function moveball() {
       nfp(juadorDerecha.style.top) + 200 >= nfp(pelota.style.top)
     ) {
       speedx *= -1;
-    } else if (nfp(pelota.style.left) >= ancho - 20) goal("left");
+    } else if (nfp(pelota.style.left) >= ancho - 20) goal("izquierda");
   }
 
   if (nfp(pelota.style.left) <= 30) {
@@ -85,7 +85,7 @@ function moveball() {
       nfp(izquierda.style.top) + 200 >= nfp(pelota.style.top)
     ) {
       speedx *= -1;
-    } else if (nfp(pelota.style.left) <= 0) goal("right");
+    } else if (nfp(pelota.style.left) <= 0) goal("derecha");
   }
 
   setTimeout(function () {
@@ -105,7 +105,7 @@ function goal(pos) {
     ogoal.style.color = "black";
   }, 10);
 
-  if (pos == "left") {
+  if (pos == "izquierda") {
     puntuacionDerecha.innerHTML = Number(puntuacionDerecha.innerHTML) + 1;
   } else {
     puntuacionIzquierda.innerHTML = Number(puntuacionIzquierda.innerHTML) + 1;
