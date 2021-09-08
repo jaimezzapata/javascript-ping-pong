@@ -21,6 +21,8 @@ onkeydown = onkeyup = function (e) {
   map[e.keyCode] = e.type == "keydown";
 };
 
+
+/* Se crea el comportamiento del movimiento de los jugadores */
 function keydown() {
   if (map[40]) {
     if (nfp(juadorDerecha.style.top) + ps > alto - 200) {
@@ -58,11 +60,15 @@ var speedx = 3,
 var balltime = 1;
 pelota.style.left = ancho / 2 + "px";
 
+
+/* Se crea la pelota de ping pong */
 function ball() {
   pelota.style.left = nfp(pelota.style.left) + speedx + "px";
   pelota.style.top = nfp(pelota.style.top) + speedy + "px";
 }
 
+
+/* Se crea el movimiento de la pelota */
 function moveball() {
   ball();
 
@@ -98,6 +104,8 @@ setInterval(function () {
 }, 10);
 moveball();
 
+
+/* Se crea el marcador de puntos y se acumula a su respectivo jugador */
 function goal(pos) {
   ogoal.style.color = "white";
 
