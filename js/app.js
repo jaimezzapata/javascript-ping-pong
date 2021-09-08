@@ -16,7 +16,7 @@ var ogoal = document.getElementById('goal');
 var w = window.innerWidth;
 var h = window.innerHeight;
 
-var map = []; zz
+var map = []; // Or you could call it "key"
 onkeydown = onkeyup = function(e) {
     e = e || event; // to deal with IE
     map[e.keyCode] = e.type == 'keydown';
@@ -131,6 +131,10 @@ function goal(pos) {
         rscore.innerHTML = Number(rscore.innerHTML) + 1;
     else
         lscore.innerHTML = Number(lscore.innerHTML) + 1;
+
+
     speedx *= -1;
     b.style.left = w / 2 + "px";
+
+
 }
